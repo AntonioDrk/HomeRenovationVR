@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 0d3723e2d6db2ff41bf44071d3a37007
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - renderTargetCamera: {instanceID: 0}
+  - canvasTexture: {fileID: 8400000, guid: 52725f789ee1a5647aa72d86f42ec955, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

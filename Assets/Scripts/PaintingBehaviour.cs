@@ -12,15 +12,15 @@ public class PaintingBehaviour : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButton(0))
+        /*if (Input.GetMouseButton(0))
         {
             SpawnBrushPoint();
-        }
+        }*/
 
-        if (Input.GetKeyDown(KeyCode.R))
+        /*if (Input.GetKeyDown(KeyCode.R))
         {
             DeleteAllBrushPoints();
-        }
+        }*/
     }
 
     void DeleteAllBrushPoints()
@@ -32,7 +32,7 @@ public class PaintingBehaviour : MonoBehaviour
         }
     }
 
-    void SpawnBrushPoint()
+    /*private void SpawnBrushPoint()
     {
         Vector3 uvWorldPos = Vector3.zero;
 
@@ -42,14 +42,27 @@ public class PaintingBehaviour : MonoBehaviour
             brushInstance.transform.parent = brushContainer;
             brushInstance.transform.localPosition = uvWorldPos + Vector3.forward;
         }
+    }*/
+
+    public void SpawnBrushPoint(Vector3 origin, Vector3 dir)
+    {
+        Vector3 uvWorldPos = Vector3.zero;
+
+        if (HitTestUVPosition(ref uvWorldPos, new Ray(origin, dir)))
+        {
+            GameObject brushInstance = Instantiate(brushPrefab);
+            brushInstance.transform.parent = brushContainer;
+            brushInstance.transform.localPosition = uvWorldPos + Vector3.forward;
+        }
     }
 
-    private bool HitTestUVPosition(ref Vector3 uvWorldPosition)
+    /*private bool HitTestUVPosition(ref Vector3 uvWorldPosition)
     {
         RaycastHit hit;
         Vector3 cursorPos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0.0f);
         Ray cursorRay = sceneCamera.ScreenPointToRay(cursorPos);
-        if (Physics.Raycast(cursorRay, out hit, 200))
+        LayerMask mask = LayerMask.GetMask("Paintable");
+        if (Physics.Raycast(cursorRay, out hit, 10, mask))
         {
             MeshCollider meshCollider = hit.collider as MeshCollider;
             if (meshCollider == null || meshCollider.sharedMesh == null)
@@ -58,6 +71,25 @@ public class PaintingBehaviour : MonoBehaviour
             Debug.Log("World Texture Coords:" + pixelUV);
             uvWorldPosition.x = pixelUV.x * 10 - Offset.x;// - paintingCamera.orthographicSize; //To center the UV on X
             uvWorldPosition.y = pixelUV.y * 10 - Offset.y;// - paintingCamera.orthographicSize; //To center the UV on Y
+            uvWorldPosition.z = 0.0f;
+            return true;
+        }
+        return false;
+    }*/
+
+    public bool HitTestUVPosition(ref Vector3 uvWorldPosition, Ray givenRay)
+    {
+        RaycastHit hit;
+        LayerMask mask = LayerMask.GetMask("Paintable");
+        if (Physics.Raycast(givenRay, out hit, 10, mask))
+        {
+            MeshCollider meshCollider = hit.collider as MeshCollider;
+            if (meshCollider == null || meshCollider.sharedMesh == null)
+                return false;
+            Vector2 pixelUV = new Vector2(hit.textureCoord.x, hit.textureCoord.y);
+            Debug.Log("World Texture Coords:" + pixelUV);
+            uvWorldPosition.x = pixelUV.x * 10 - Offset.x; // - paintingCamera.orthographicSize; //To center the UV on X
+            uvWorldPosition.y = pixelUV.y * 10 - Offset.y; // - paintingCamera.orthographicSize; //To center the UV on Y
             uvWorldPosition.z = 0.0f;
             return true;
         }

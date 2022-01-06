@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb3f19645c0227b4a9d1edb8e8919bc3, type: 3}
+  m_Name: ItemsStoreDatabase
+  m_EditorClassIdentifier: 
+  items:
+  - name: SINGLE BED
+    prefab: {fileID: 100014, guid: bcca84a2658e08241be17e9ed78e7453, type: 3}
+    image: {fileID: 21300000, guid: 3e8bdd475e8880940adc30de76a5452f, type: 3}
+    price: 140
+    category: 0
+  - name: QUEEN BED
+    prefab: {fileID: 100010, guid: 46ee326d6f660104da37854bc4722d97, type: 3}
+    image: {fileID: 21300000, guid: 789eac4dd4a1d5c4d9c426a146155444, type: 3}
+    price: 250
+    category: 0
+  - name: FRIDGE
+    prefab: {fileID: 100010, guid: 46ee326d6f660104da37854bc4722d97, type: 3}
+    image: {fileID: 21300000, guid: 789eac4dd4a1d5c4d9c426a146155444, type: 3}
+    price: 500
+    category: 2

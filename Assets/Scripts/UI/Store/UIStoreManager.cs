@@ -11,6 +11,8 @@ public class UIStoreManager : MonoBehaviour
     [SerializeField] private Transform categoriesContainer;
     [SerializeField] private GameObject categoryContainerPrefab;
 
+    [SerializeField] private Transform furnitureContainer;
+    
     private ItemCategory currentCategory;
 
     private void Start()
@@ -69,7 +71,11 @@ public class UIStoreManager : MonoBehaviour
     {
 	    // check money >= price
 	    TakeMoney(item.price);
-	    Instantiate(item.prefab, GetCurrentPosition(), Quaternion.identity);
+	    
+	    var obj = Instantiate(item.prefab, GetCurrentPosition(), Quaternion.identity);
+	    obj.transform.SetParent(furnitureContainer);
+	    obj.name = item.name;
+	    
 	    MissionsManager.Instance.CheckMission(ActionType.BUY, item.name);
     }
     

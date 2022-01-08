@@ -8,3 +8,10 @@ public enum ItemCategory
     KITCHEN, 
     LIVINGROOM 
 };
+
+public enum ActionType 
+{ 
+    BUY,
+    MOVE,
+    PAINT
+};

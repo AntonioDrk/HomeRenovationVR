@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class UIStoreManager : MonoBehaviour
@@ -61,16 +60,17 @@ public class UIStoreManager : MonoBehaviour
 				itemContainer.SetItemName(item.name);
 				itemContainer.SetItemPrice(item.price);
 
-				itemContainer.OnBuyItem(BuyItem, item.prefab, item.price);
+				itemContainer.OnBuyItem(BuyItem, item);
 			}
 		}
 	}
     
-    private void BuyItem(GameObject prefab, int price)
+    private void BuyItem(Item item)
     {
 	    // check money >= price
-	    TakeMoney(price);
-	    Instantiate(prefab, GetCurrentPosition(), Quaternion.identity);
+	    TakeMoney(item.price);
+	    Instantiate(item.prefab, GetCurrentPosition(), Quaternion.identity);
+	    MissionsManager.Instance.CheckMission(ActionType.BUY, item.name);
     }
     
     private void DisplayCategory(ItemCategory category)

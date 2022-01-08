@@ -24,9 +24,9 @@ public class ItemContainerUI : MonoBehaviour
         itemPriceText.text = price.ToString();
     }
     
-    public void OnBuyItem(UnityAction<GameObject,int> action, GameObject prefab, int price)
+    public void OnBuyItem(UnityAction<Item> action, Item item)
     {
         itemBuyButton.onClick.RemoveAllListeners();
-        itemBuyButton.onClick.AddListener(() => action.Invoke(prefab, price));
+        itemBuyButton.onClick.AddListener(() => action.Invoke(item));
     }
 }

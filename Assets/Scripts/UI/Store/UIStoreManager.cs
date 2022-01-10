@@ -76,7 +76,11 @@ public class UIStoreManager : MonoBehaviour
 	    obj.transform.SetParent(furnitureContainer);
 	    obj.name = item.name;
 	    
-	    MissionsManager.Instance.CheckMission(ActionType.BUY, item.name);
+	    Mission mission = MissionsManager.Instance.CheckMission(ActionType.BUY, item.name);
+	    if (mission != null)
+	    {
+		    MissionsManager.Instance.OnMissionDone(mission);
+	    }
     }
     
     private void DisplayCategory(ItemCategory category)

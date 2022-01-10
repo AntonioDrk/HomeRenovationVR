@@ -6,7 +6,8 @@ public enum ItemCategory
     BEDROOM, 
     BATHROOM, 
     KITCHEN, 
-    LIVINGROOM 
+    LIVINGROOM,
+    OFFICE 
 };
 
 public enum ActionType 

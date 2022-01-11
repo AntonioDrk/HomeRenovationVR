@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class MissionsManager : MonoBehaviour
 {
@@ -16,6 +17,10 @@ public class MissionsManager : MonoBehaviour
     
     void Awake()
     {
+	    if (Instance != null)
+	    {
+		    Destroy(Instance);
+	    }
 	    Instance = this;
     }
     private void Start()
@@ -53,6 +58,16 @@ public class MissionsManager : MonoBehaviour
 	    }
 
 	    return mission;
+    }
+
+    public void XROnSelectEntered(SelectEnterEventArgs args)
+    {
+	    SelectedObjectFromMission(args.interactableObject.transform.name);
+    }
+
+    public void XROnSelectExited(SelectExitEventArgs args)
+    {
+	    DroppedObjectFromMission(args.interactableObject.transform.gameObject, args.interactableObject.transform.name);
     }
 
     // pick up object - check if you have a mission to move the current object
@@ -97,5 +112,10 @@ public class MissionsManager : MonoBehaviour
 		    Debug.Log("Missions DONE");
 	    }
     }
-    
+
+    public void AddMissionContainer(Transform obj)
+    {
+	    missionsContainer = obj;
+    }
+
 }

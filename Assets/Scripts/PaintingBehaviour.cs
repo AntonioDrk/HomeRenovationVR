@@ -1,3 +1,4 @@
+using System;
 using UnityEditor.PackageManager;
 using UnityEngine;
 
@@ -8,12 +9,18 @@ public class PaintingBehaviour : MonoBehaviour
     [SerializeField] private uint maxNumberOfBrushes;
     [SerializeField] private Transform brushContainer;
     [SerializeField] private GameObject brushPrefab;
+    [SerializeField] private SpriteRenderer brushSprite;
 
     [SerializeField] private MeshRenderer canvasMeshRenderer;
 
     [SerializeField] private Material baseMaterial;
     public Vector2 Offset;
     private int brushCounter = 0;
+
+    private void Start()
+    {
+        ChangeBrushColor(Color.cyan);
+    }
 
     void Update()
     {
@@ -115,7 +122,7 @@ public class PaintingBehaviour : MonoBehaviour
 
             // Get the UV coord to world space
             Vector2 pixelUV = new Vector2(hit.textureCoord.x, hit.textureCoord.y);
-            Debug.Log("World Texture Coords:" + pixelUV);
+            //Debug.Log("World Texture Coords:" + pixelUV);
             // Multiply it by then because from 0.0 - 1.0 we need to scale it to 0.0 - 10.0 (the plane is 10 units)
             uvWorldPosition.x = pixelUV.x * 10 - Offset.x; // - paintingCamera.orthographicSize; //To center the UV on X
             uvWorldPosition.y = pixelUV.y * 10 - Offset.y; // - paintingCamera.orthographicSize; //To center the UV on Y
@@ -137,5 +144,10 @@ public class PaintingBehaviour : MonoBehaviour
         baseMaterial.mainTexture = tex;
         DeleteAllBrushPoints();
         brushCounter = 0;
+    }
+
+    public void ChangeBrushColor(Color col)
+    {
+        brushSprite.color = col;
     }
 }

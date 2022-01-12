@@ -21,11 +21,6 @@ public class UIStoreManager : MonoBehaviour
 	    GenerateStoreItemsUI(currentCategory);
     }
 
-    private Vector3 GetCurrentPosition()
-    {
-        return new Vector3(0, 0, 0);
-    }
-
     private void TakeMoney(int price)
     {
         // money -= price;
@@ -72,8 +67,7 @@ public class UIStoreManager : MonoBehaviour
 	    // check money >= price
 	    TakeMoney(item.price);
 	    
-	    var obj = Instantiate(item.prefab, GetCurrentPosition(), Quaternion.identity);
-	    obj.transform.SetParent(furnitureContainer);
+	    var obj = Instantiate(item.prefab, furnitureContainer);
 	    obj.name = item.name;
 	    
 	    Mission mission = MissionsManager.Instance.CheckMission(ActionType.BUY, item.name);

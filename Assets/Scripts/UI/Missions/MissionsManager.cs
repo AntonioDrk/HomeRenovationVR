@@ -26,7 +26,6 @@ public class MissionsManager : MonoBehaviour
     private void Start()
     {
 	    targetPositionParticles.SetActive(false);
-	    GenerateMissionsUI(currentLevel);
     }
     
     private void GenerateMissionsUI(int level)
@@ -67,11 +66,11 @@ public class MissionsManager : MonoBehaviour
 
     public void XROnSelectExited(SelectExitEventArgs args)
     {
-	    DroppedObjectFromMission(args.interactableObject.transform.gameObject, args.interactableObject.transform.name);
+	    DroppedObjectFromMission(args.interactableObject.transform.gameObject);
     }
 
     // pick up object - check if you have a mission to move the current object
-    public void SelectedObjectFromMission(string itemName)
+    private void SelectedObjectFromMission(string itemName)
     {
 	    var mission = CheckMission(ActionType.MOVE, itemName);
 	    
@@ -85,9 +84,9 @@ public class MissionsManager : MonoBehaviour
     }
     
     // drop object - check if you dropped an object from a mission on the target position
-    public void DroppedObjectFromMission(GameObject item, string itemName)
+    private void DroppedObjectFromMission(GameObject item)
     {
-	    var mission = CheckMission(ActionType.MOVE, itemName);
+	    var mission = CheckMission(ActionType.MOVE, item.name);
 	    
 	    if (mission == null)
 	    {
@@ -116,6 +115,7 @@ public class MissionsManager : MonoBehaviour
     public void AddMissionContainer(Transform obj)
     {
 	    missionsContainer = obj;
+	    GenerateMissionsUI(currentLevel);
     }
 
 }

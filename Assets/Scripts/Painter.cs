@@ -4,7 +4,7 @@ using Random = UnityEngine.Random;
 
 public class Painter : MonoBehaviour
 {
-    [SerializeField] private PaintingBehaviour _paintObject;
+    [SerializeField] private PaintingBehaviour paintObject;
     [SerializeField] private Color paintingColor;
 
     private Vector3 AverageOfContactPoints(ContactPoint[] contactPoints)
@@ -23,21 +23,29 @@ public class Painter : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        Debug.Log("COLLIDED WITH " + other.gameObject.name);
+        if (other.transform.CompareTag("PaintSurface"))
+        {
+            Debug.Log("COLLIDED WITH " + other.gameObject.name);
+            //Vector3 avg = AverageOfContactPoints(other.contacts);
 
-        Vector3 avg = AverageOfContactPoints(other.contacts);
-        
-        Debug.DrawRay(avg, other.contacts[0].normal * 100, 
-            Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f), 25f);
-        _paintObject.ChangeBrushColor(paintingColor);
-        _paintObject.SpawnBrushPoint(avg, -other.contacts[0].normal);
+            //Debug.DrawRay(avg, other.contacts[0].normal * 100,Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f), 2f);
+            foreach (ContactPoint point in other.contacts)
+            {
+                Debug.DrawRay(point.point, -point.normal * 3, Color.green, 1f);
+                paintObject.ChangeBrushColor(paintingColor);
+                paintObject.SpawnBrushPoint(point.point, -point.normal);  
+            }
+        }
     }
     
     private void OnCollisionStay(Collision other)
     {
-        Vector3 avg = AverageOfContactPoints(other.contacts);
-        _paintObject.ChangeBrushColor(paintingColor);
-        _paintObject.SpawnBrushPoint(avg, -other.contacts[0].normal);
+        if (other.transform.CompareTag("PaintSurface"))
+        {
+            Vector3 avg = AverageOfContactPoints(other.contacts);
+            paintObject.ChangeBrushColor(paintingColor);
+            paintObject.SpawnBrushPoint(avg, -other.contacts[0].normal);
+        }
     }
 
     public void SetColor(Color col)

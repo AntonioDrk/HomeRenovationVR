@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.XR.Interaction.Toolkit;
 
 public class MissionsManager : MonoBehaviour
@@ -25,6 +26,7 @@ public class MissionsManager : MonoBehaviour
     }
     private void Start()
     {
+	    currentLevel = SceneManager.GetActiveScene().buildIndex - 1;
 	    targetPositionParticles.SetActive(false);
     }
     
@@ -109,6 +111,10 @@ public class MissionsManager : MonoBehaviour
 	    if (missionsDB.AreMissionsDone(currentLevel))
 	    {
 		    Debug.Log("Missions DONE");
+		    if (currentLevel == 1)
+		    {
+			    SceneManager.LoadScene(currentLevel + 1);
+		    }
 	    }
     }
 

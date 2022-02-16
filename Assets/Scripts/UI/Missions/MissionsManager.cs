@@ -116,9 +116,9 @@ public class MissionsManager : MonoBehaviour
 	    if (missionsDB.AreMissionsDone(currentLevel))
 	    {
 		    Debug.Log("Missions DONE");
+		    winningParticles.SetActive(true);
 		    if (currentLevel < 2)
 		    {
-			    winningParticles.SetActive(true);
 			    StartCoroutine(WaitSecondsCoroutine(3));
 		    }
 	    }

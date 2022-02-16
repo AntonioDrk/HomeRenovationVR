@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.XR;
 using UnityEngine.XR.Interaction.Toolkit;
 
@@ -9,6 +10,7 @@ public class HandPresence : MonoBehaviour
 {
     public XRNode inputSource;
     [SerializeField] private Animator anim;
+    [SerializeField] private CanvasGroup exitBtn;
 
     void Start()
     {
@@ -18,6 +20,21 @@ public class HandPresence : MonoBehaviour
     void Update()
     {
         InputDevice device = InputDevices.GetDeviceAtXRNode(inputSource);
+        if (device.TryGetFeatureValue(CommonUsages.primaryButton, out bool primBtn))
+        {
+            if (primBtn)
+            {
+                exitBtn.alpha = 1f;
+                exitBtn.interactable = true;
+                exitBtn.blocksRaycasts = true;
+            }
+            else
+            {
+                exitBtn.alpha = 0f;
+                exitBtn.interactable = false;
+                exitBtn.blocksRaycasts = false;
+            }
+        }
         if (device.TryGetFeatureValue(CommonUsages.trigger, out float triggerValue))
         {
             anim.SetFloat("Trigger", triggerValue);
@@ -35,5 +52,10 @@ public class HandPresence : MonoBehaviour
         {
             anim.SetFloat("Grip", 0);
         }
+    }
+
+    public void ReturnToMenu()
+    {
+        SceneManager.LoadScene(0);
     }
 }

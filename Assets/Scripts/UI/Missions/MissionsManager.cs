@@ -111,10 +111,7 @@ public class MissionsManager : MonoBehaviour
 	    if (missionsDB.AreMissionsDone(currentLevel))
 	    {
 		    Debug.Log("Missions DONE");
-		    if (currentLevel == 1)
-		    {
-			    SceneManager.LoadScene(currentLevel + 1);
-		    }
+		    SceneManager.LoadScene(2);
 	    }
     }
 

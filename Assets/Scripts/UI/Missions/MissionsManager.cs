@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.XR.Interaction.Toolkit;
 
@@ -14,7 +15,9 @@ public class MissionsManager : MonoBehaviour
     [SerializeField] private GameObject targetPositionParticles;
     [SerializeField] private float acceptableMoveMissionRange = 1.5f;
     
-    private int currentLevel = 0;
+    [SerializeField] private GameObject winningParticles;
+    
+    private int currentLevel = 1;
     
     void Awake()
     {
@@ -23,10 +26,11 @@ public class MissionsManager : MonoBehaviour
 		    Destroy(Instance);
 	    }
 	    Instance = this;
+	    winningParticles.SetActive(false);
     }
     private void Start()
     {
-	    currentLevel = SceneManager.GetActiveScene().buildIndex - 1;
+	    currentLevel = SceneManager.GetActiveScene().buildIndex;
 	    targetPositionParticles.SetActive(false);
     }
     
@@ -111,9 +115,10 @@ public class MissionsManager : MonoBehaviour
 	    if (missionsDB.AreMissionsDone(currentLevel))
 	    {
 		    Debug.Log("Missions DONE");
-		    if (currentLevel == 1)
+		    if (currentLevel < 2)
 		    {
-			    SceneManager.LoadScene(currentLevel + 1);
+			    winningParticles.SetActive(true);
+			    StartCoroutine(WaitSecondsCoroutine(3));
 		    }
 	    }
     }
@@ -122,6 +127,12 @@ public class MissionsManager : MonoBehaviour
     {
 	    missionsContainer = obj;
 	    GenerateMissionsUI(currentLevel);
+    }
+    
+    IEnumerator WaitSecondsCoroutine(float seconds)
+    {
+	    yield return new WaitForSeconds(seconds);
+	    SceneManager.LoadScene(currentLevel + 1);
     }
 
 }

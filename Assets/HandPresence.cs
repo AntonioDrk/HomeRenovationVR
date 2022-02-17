@@ -22,17 +22,20 @@ public class HandPresence : MonoBehaviour
         InputDevice device = InputDevices.GetDeviceAtXRNode(inputSource);
         if (device.TryGetFeatureValue(CommonUsages.primaryButton, out bool primBtn))
         {
-            if (primBtn)
+            if(exitBtn)
             {
-                exitBtn.alpha = 1f;
-                exitBtn.interactable = true;
-                exitBtn.blocksRaycasts = true;
-            }
-            else
-            {
-                exitBtn.alpha = 0f;
-                exitBtn.interactable = false;
-                exitBtn.blocksRaycasts = false;
+                if (primBtn)
+                {
+                    exitBtn.alpha = 1f;
+                    exitBtn.interactable = true;
+                    exitBtn.blocksRaycasts = true;
+                }
+                else
+                {
+                    exitBtn.alpha = 0f;
+                    exitBtn.interactable = false;
+                    exitBtn.blocksRaycasts = false;
+                }
             }
         }
         if (device.TryGetFeatureValue(CommonUsages.trigger, out float triggerValue))

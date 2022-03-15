@@ -31,7 +31,11 @@ public class MissionsManager : MonoBehaviour
     private void Start()
     {
 	    currentLevel = SceneManager.GetActiveScene().buildIndex;
-	    PlayerPrefs.SetInt("lastLevel", currentLevel);
+	    var lastLevel = PlayerPrefs.GetInt("lastLevel");
+	    if (lastLevel < currentLevel)
+	    {
+		    PlayerPrefs.SetInt("lastLevel", currentLevel);
+	    }
 	    targetPositionParticles.SetActive(false);
     }
     
